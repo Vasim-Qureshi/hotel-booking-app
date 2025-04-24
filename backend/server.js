@@ -2,10 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js'; // ✅ Ensure .js extension
-import authRoutes from './routes/authRoutes.js'; // ✅ Use ES6 import
-import hotelRoutes from './routes/hotelRoutes.js';
-import bookingRoutes from './routes/bookingRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import loginRoutes from './routes/loginRoutes.js';
+import hotelRoutes from "./routes/hotelRoutes.js";
+import bookingRoutes from './routes/bookingRoutes.js';
+import { verifyToken } from './middleware/auth.js';
 
 // Load Environment Variables
 dotenv.config();
@@ -20,10 +22,11 @@ app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 connectDB();
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/hotels', hotelRoutes);
-app.use('/api/bookings', bookingRoutes);
+app.use('/api/auth/register',authRoutes);
+app.use('/api/auth/login', loginRoutes);
+app.use('/api/hotels',verifyToken, hotelRoutes);
+app.use('/api/bookings',verifyToken, bookingRoutes);
 app.use('/api/users', userRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5100;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

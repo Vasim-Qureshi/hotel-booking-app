@@ -1,30 +1,17 @@
-const express = require('express');
+import express from 'express';
+import { createBooking, deleteBooking, getBooking, getBookings, updateBooking } from '../controllers/bookingController.js';
+
 const router = express.Router();
-const Booking = require('../models/Booking');
 
-router.get('/', async (req, res) => {
-  const bookings = await Booking.find().populate('user hotel');
-  res.json(bookings);
-});
+router.get('/', getBookings);
 
-router.get('/:id', async (req, res) => {
-  const booking = await Booking.findById(req.params.id).populate('user hotel');
-  res.json(booking);
-});
+router.get('/:id', getBooking);
 
-router.post('/', async (req, res) => {
-  const booking = await Booking.create(req.body);
-  res.status(201).json(booking);
-});
+router.post('/', createBooking);
 
-router.put('/:id', async (req, res) => {
-  const booking = await Booking.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(booking);
-});
+router.put('/:id', updateBooking);
 
-router.delete('/:id', async (req, res) => {
-  await Booking.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Booking deleted' });
-});
+router.delete('/:id', deleteBooking);
 
-module.exports = router;
+const bookingRoutes = router;
+export default bookingRoutes;

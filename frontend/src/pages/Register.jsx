@@ -7,12 +7,13 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
+      await axios.post('http://localhost:5000/api/auth/register', { name, email, password, role });
       alert('Registration successful! Please login.');
       navigate('/login');
     } catch (error) {
@@ -29,6 +30,8 @@ const Register = () => {
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
           className="w-full p-2 mb-3 border rounded" required />
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-2 mb-3 border rounded" required />
+        <input type="role" placeholder="Role" value={role} onChange={(e) => setRole(e.target.value)}
           className="w-full p-2 mb-3 border rounded" required />
         <button type="submit" className="w-full bg-green-500 text-white p-2 rounded">Register</button>
       </form>

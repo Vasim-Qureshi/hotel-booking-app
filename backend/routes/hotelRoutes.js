@@ -1,30 +1,17 @@
-import { Router } from 'express';
-import { Hotel } from '../models/Hotel';
-const router = Router();
+import express from 'express';
+import { createHotel, deleteHotel, getHotel, getHotels, updateHotel } from '../controllers/hotelController.js';
 
-router.get('/', async (req, res) => {
-  const hotels = await Hotel.find();
-  res.json(hotels);
-});
+const router = express.Router();
 
-router.get('/:id', async (req, res) => {
-  const hotel = await Hotel.findById(req.params.id);
-  res.json(hotel);
-});
+router.get('/', getHotels );
 
-router.post('/', async (req, res) => {
-  const hotel = await Hotel.create(req.body);
-  res.status(201).json(hotel);
-});
+router.get('/:id', getHotel);
 
-router.put('/:id', async (req, res) => {
-  const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(hotel);
-});
+router.post('/',createHotel);
 
-router.delete('/:id', async (req, res) => {
-  await Hotel.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Hotel deleted' });
-});
+router.put('/:id', updateHotel);
 
-export default router;
+router.delete('/:id', deleteHotel);
+
+const hotelRoutes = router;
+export default hotelRoutes;
