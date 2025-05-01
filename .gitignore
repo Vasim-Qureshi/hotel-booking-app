@@ -4,8 +4,7 @@
 /backend/node_modules
 /frontend/node_modules
 
-package.json
-package-lock.json
+
 /.pnp
 .pnp.js
 .yarn/install-state.gz
