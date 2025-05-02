@@ -27,6 +27,9 @@ app.use('/api/auth/login', loginRoutes);
 app.use('/api/hotels',verifyToken, hotelRoutes);
 app.use('/api/bookings',verifyToken, bookingRoutes);
 app.use('/api/users', userRoutes);
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
 const PORT = process.env.PORT || 5100;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
