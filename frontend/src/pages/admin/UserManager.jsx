@@ -9,7 +9,7 @@ const UserManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/users');
+      const res = await axios.get(`${process.env.server_url}/api/users`);
       setUsers(res.data);
       toast.success('Users fetched successfully!');
     } catch (error) {
@@ -28,9 +28,9 @@ const UserManager = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/users/${editingId}`, form);
+        await axios.put(`${process.env.server_url}/api/users/${editingId}`, form);
       } else {
-        await axios.post('http://localhost:5000/api/users', form);
+        await axios.post(`${process.env.server_url}/api/users`, form);
       }
       setForm({ name: '', email: '', password: '', role: '' }); // Reset form after submission
       setEditingId(null);
@@ -58,7 +58,7 @@ const UserManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/users/${id}`);
+      await axios.delete(`${process.env.server_url}/api/users/${id}`);
       toast.success('User deleted successfully!');
       fetchUsers();
     } catch (error) {

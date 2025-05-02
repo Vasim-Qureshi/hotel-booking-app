@@ -21,13 +21,13 @@ const BookingManager = () => {
   const fetchData = async () => {
     try {
       const [bookingRes, userRes, hotelRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/bookings', {
+        axios.get(`${process.env.server_url}/api/bookings`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get('http://localhost:5000/api/users', {
+        axios.get(`${process.env.server_url}/api/users`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get('http://localhost:5000/api/hotels', {
+        axios.get(`${process.env.server_url}/api/hotels`, {
           headers: { Authorization: `Bearer ${token}` },
         })
       ]);
@@ -53,11 +53,11 @@ const BookingManager = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/bookings/${editingId}`, form, {
+        await axios.put(`${process.env.server_url}/api/bookings/${editingId}`, form, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post('http://localhost:5000/api/bookings', form, {
+        await axios.post(`${process.env.server_url}/api/bookings`, form, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -84,7 +84,7 @@ const BookingManager = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/bookings/${id}`, {
+    await axios.delete(`${process.env.server_url}/api/bookings/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchData();

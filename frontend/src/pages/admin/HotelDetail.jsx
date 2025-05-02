@@ -18,12 +18,13 @@ const HotelDetail = () => {
     useEffect(() => {
         const fetchHotelDetails = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/api/hotels/${id}`, {
+            const { data } = await axios.get(`${process.env.server_url}/api/hotels/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
             });
             setHotel(data);
         } catch (error) {
             console.error("Error fetching hotel details:", error);
+            toast.error("Failed to fetch hotel details");
         } finally {
             setLoading(false);
         }
@@ -34,7 +35,7 @@ const HotelDetail = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/hotels/${id}`, {
+            await axios.delete(`${process.env.server_url}/api/hotels/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             toast.success("Hotel deleted successfully");

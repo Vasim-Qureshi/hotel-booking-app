@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/hotels', {
+        const { data } = await axios.get(`${process.env.server_url}/api/hotels`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setHotels(data);

@@ -17,7 +17,7 @@ const HotelManage = () => {
   const token = localStorage.getItem('token');
 
   const fetchHotels = async () => {
-    const res = await axios.get('http://localhost:5000/api/hotels', {
+    const res = await axios.get(`${process.env.server_url}/api/hotels`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     setHotels(res.data);
@@ -43,13 +43,13 @@ const HotelManage = () => {
       };
 
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/hotels/${editingId}`, data, {
+        await axios.put(`${process.env.server_url}/api/hotels/${editingId}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('Hotel updated successfully!');
         setEditingId(null);
       } else {
-        await axios.post('http://localhost:5000/api/hotels', data, {
+        await axios.post(`${process.env.server_url}/api/hotels`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('Hotel added successfully!');
@@ -74,10 +74,16 @@ const HotelManage = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:5000/api/hotels/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    fetchHotels();
+    try {
+      await axios.delete(`${process.env.server_url}/api/hotels/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Hotel deleted successfully");
+      fetchHotels();
+    } catch (error) {
+      console.error("Error deleting hotel:", error);
+      toast.error("Failed to delete hotel");
+    }
   };
 
   return (

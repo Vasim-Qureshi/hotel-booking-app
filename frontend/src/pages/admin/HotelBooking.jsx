@@ -36,14 +36,14 @@ const HotelBooking = () => {
     const fetchUserAndHotel = async () => {
         try {
 
-            const userRes = await axios.get(`http://localhost:5000/api/users/${userId}`, { // Fixed template literal syntax
+            const userRes = await axios.get(`${process.env.server_url}/api/users/${userId}`, { // Fixed template literal syntax
                 headers: { Authorization: `Bearer ${token}` },
             });
             setUser(userRes.data);
             console.log(userRes.data);
 
 
-            const hotelRes = await axios.get(`http://localhost:5000/api/hotels/${hotelId}`, { // Fixed to use hotelId directly
+            const hotelRes = await axios.get(`${process.env.server_url}/api/hotels/${hotelId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setHotel(hotelRes.data);
@@ -58,7 +58,7 @@ const HotelBooking = () => {
 
     const fetchBookings = async () => {
         try {
-            const bookingRes = await axios.get("http://localhost:5000/api/bookings", { // Fixed template literal syntax
+            const bookingRes = await axios.get(`${process.env.server_url}/api/bookings`, { // Fixed template literal syntax
                 headers: { Authorization: `Bearer ${token}` },
             });
             setBookings(bookingRes.data);
@@ -81,7 +81,7 @@ const HotelBooking = () => {
         if (editingId) {
             try {
                 // Update existing booking
-                await axios.put(`http://localhost:5000/api/bookings/${editingId}`, form, {
+                await axios.put(`${process.env.server_url}/api/bookings/${editingId}`, form, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 toast.success('Booking updated successfully!');
@@ -94,7 +94,7 @@ const HotelBooking = () => {
             try {
                 // Create a new booking
                 let { checkIn, checkOut, status } = form;
-                await axios.post('http://localhost:5000/api/bookings', { user: userId, hotel: hotelId, checkIn, checkOut, status }, {
+                await axios.post(`${process.env.server_url}/api/bookings`, { user: userId, hotel: hotelId, checkIn, checkOut, status }, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 toast.success('Booking created successfully!');
@@ -123,7 +123,7 @@ const HotelBooking = () => {
     };
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:5000/api/bookings/${id}`, {
+        await axios.delete(`${process.env.server_url}/api/bookings/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
         });
         fetchBookings();
