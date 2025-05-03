@@ -15,7 +15,7 @@ const Home = () => {
     const fetchHotels = async () => {
       try {
         const { data } = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/hotels", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         });
         setHotels(data);
       } catch (error) {

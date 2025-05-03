@@ -16,7 +16,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.Client_URL, credentials: true })); // Fixed quotes around URL
+app.use(cors({ origin: 'https://hotel-booking-app-6wo1.vercel.app', credentials: true })); // Fixed quotes around URL
 
 // Connect Database
 connectDB();
