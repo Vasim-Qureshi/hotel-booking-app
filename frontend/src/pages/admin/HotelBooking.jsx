@@ -36,14 +36,14 @@ const HotelBooking = () => {
     const fetchUserAndHotel = async () => {
         try {
 
-            const userRes = await axios.get(`${process.env.server_url}/api/users/${userId}`, { // Fixed template literal syntax
+            const userRes = await axios.get(`https://hotel-booking-app-sand-seven.vercel.app/api/users/${userId}`, { // Fixed template literal syntax
                 headers: { Authorization: `Bearer ${token}` },
             });
             setUser(userRes.data);
             console.log(userRes.data);
 
 
-            const hotelRes = await axios.get(`${process.env.server_url}/api/hotels/${hotelId}`, {
+            const hotelRes = await axios.get(`https://hotel-booking-app-sand-seven.vercel.app/api/hotels/${hotelId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setHotel(hotelRes.data);
@@ -58,7 +58,7 @@ const HotelBooking = () => {
 
     const fetchBookings = async () => {
         try {
-            const bookingRes = await axios.get(`${process.env.server_url}/api/bookings`, { // Fixed template literal syntax
+            const bookingRes = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", { // Fixed template literal syntax
                 headers: { Authorization: `Bearer ${token}` },
             });
             setBookings(bookingRes.data);
@@ -81,27 +81,27 @@ const HotelBooking = () => {
         if (editingId) {
             try {
                 // Update existing booking
-                await axios.put(`${process.env.server_url}/api/bookings/${editingId}`, form, {
+                await axios.put(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${editingId}`, form, { // Fixed the URL
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 toast.success('Booking updated successfully!');
             } catch (error) {
                 // Handle error (e.g., show a notification)
-                return toast.error('Error updating booking!');
                 console.error('Error updating booking:', error);
+                return toast.error('Error updating booking!');
             }
         } else {
             try {
                 // Create a new booking
                 let { checkIn, checkOut, status } = form;
-                await axios.post(`${process.env.server_url}/api/bookings`, { user: userId, hotel: hotelId, checkIn, checkOut, status }, {
+                await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", { user: userId, hotel: hotelId, checkIn, checkOut, status }, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 toast.success('Booking created successfully!');
             } catch (error) {
                 // Handle error (e.g., show a notification)
-                return toast.error('Error creating booking!');
                 console.error('Error creating booking:', error);
+                return toast.error('Error creating booking!');
             } finally {
                 // Reset form after submission
                 setForm({ user: '', hotel: '', checkIn: '', checkOut: '', status: 'pending' });
@@ -123,7 +123,7 @@ const HotelBooking = () => {
     };
 
     const handleDelete = async (id) => {
-        await axios.delete(`${process.env.server_url}/api/bookings/${id}`, {
+        await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${id}`, { // Fixed the URL
             headers: { Authorization: `Bearer ${token}` },
         });
         fetchBookings();

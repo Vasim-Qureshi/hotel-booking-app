@@ -21,13 +21,13 @@ const BookingManager = () => {
   const fetchData = async () => {
     try {
       const [bookingRes, userRes, hotelRes] = await Promise.all([
-        axios.get(`${process.env.server_url}/api/bookings`, {
+        axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${process.env.server_url}/api/users`, {
+        axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/users", {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${process.env.server_url}/api/hotels`, {
+        axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/hotels", {
           headers: { Authorization: `Bearer ${token}` },
         })
       ]);
@@ -53,11 +53,11 @@ const BookingManager = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put(`${process.env.server_url}/api/bookings/${editingId}`, form, {
+        await axios.put(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${editingId}`, form, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post(`${process.env.server_url}/api/bookings`, form, {
+        await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", form, { // Fixed the URL
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -84,7 +84,7 @@ const BookingManager = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`${process.env.server_url}/api/bookings/${id}`, {
+    await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${id}`, { // Fixed the URL
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchData();

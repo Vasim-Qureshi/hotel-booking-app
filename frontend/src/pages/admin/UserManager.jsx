@@ -9,7 +9,7 @@ const UserManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`${process.env.server_url}/api/users`);
+      const res = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/users"); // Fixed URL
       setUsers(res.data);
       toast.success('Users fetched successfully!');
     } catch (error) {
@@ -28,9 +28,9 @@ const UserManager = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put(`${process.env.server_url}/api/users/${editingId}`, form);
+        await axios.put("https://hotel-booking-app-sand-seven.vercel.app/api/users/${editingId}", form); // Updated URL
       } else {
-        await axios.post(`${process.env.server_url}/api/users`, form);
+        await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/users", form); // Fixed URL
       }
       setForm({ name: '', email: '', password: '', role: '' }); // Reset form after submission
       setEditingId(null);
@@ -58,7 +58,7 @@ const UserManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.server_url}/api/users/${id}`);
+      await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/users/${id}`); // Updated URL
       toast.success('User deleted successfully!');
       fetchUsers();
     } catch (error) {

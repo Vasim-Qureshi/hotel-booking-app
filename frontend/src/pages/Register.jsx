@@ -13,7 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.server_url}/api/auth/register`, { name, email, password, role });
+      await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/auth/register", { name, email, password, role });
       alert('Registration successful! Please login.');
       navigate('/login');
     } catch (error) {
