@@ -16,7 +16,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: `${process.env.Client_URL}`, credentials: true }));
+app.use(cors({ origin: process.env.Client_URL, credentials: true })); // Fixed quotes around URL
 
 // Connect Database
 connectDB();

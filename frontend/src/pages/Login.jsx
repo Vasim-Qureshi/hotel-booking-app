@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${process.env.server_url}/api/auth/login`, { email, password });
+      const { data } = await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/auth/login", { email, password });
       localStorage.setItem('token', data.token);
       navigate('/'); // Redirect to home after login
     } catch (error) {
