@@ -16,7 +16,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: 'https://hotel-booking-app-6wo1.vercel.app', credentials: true })); // Fixed quotes around URL
+app.use(cors({ origin: ["http://localhost:5173", 'https://hotel-booking-app-6wo1.vercel.app'], credentials: true })); // Fixed quotes around URL
 
 // Connect Database
 connectDB();
@@ -26,7 +26,7 @@ app.use('/api/auth/register',authRoutes);
 app.use('/api/auth/login', loginRoutes);
 app.use('/api/hotels',verifyToken, hotelRoutes);
 app.use('/api/bookings',verifyToken, bookingRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api/users', verifyToken, userRoutes);
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
