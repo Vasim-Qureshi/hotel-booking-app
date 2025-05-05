@@ -26,9 +26,9 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     const hashedPassword = await hash(password, 10);
-    const CreatedUserData = await User.create({ name, email, password: hashedPassword });
+    const CreatedUserData = await User.create({ name, email, password: hashedPassword, role });
     res.status(201).json({ message: 'User Created', CreatedUserData });
   } catch (error) {
     console.error('Error creating user:', error);
@@ -38,9 +38,9 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     const hashedPassword = await hash(password, 10);
-    const updatedUserData = await User.findByIdAndUpdate(req.params.id, { name, email, password: hashedPassword }, { new: true });
+    const updatedUserData = await User.findByIdAndUpdate(req.params.id, { name, email, password: hashedPassword, role }, { new: true });
     res.json({ message: 'User updated', updatedUserData });  
   } catch (error) {
     console.error('Error updating user:', error);
