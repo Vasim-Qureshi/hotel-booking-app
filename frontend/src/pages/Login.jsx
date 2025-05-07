@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React from 'react';
+import api from '../api'; // Import the api instance
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/auth/login", { email, password }); // Fixed array brackets
+      const { data } = await api.post("https://hotel-booking-app-sand-seven.vercel.app/api/auth/login", { email, password }); // Fixed array brackets
       localStorage.setItem('token', data.token);
       navigate('/'); // Redirect to home after login
     } catch (error) {
