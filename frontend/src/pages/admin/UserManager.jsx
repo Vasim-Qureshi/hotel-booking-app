@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
+const token = localStorage.getItem('token');
+// console.log(token); // for checking the token value
+
 const UserManager = () => {
   const [users, setUsers] = useState([]);
   const [form, setForm] = useState({ name: '', email: '' });
@@ -9,8 +12,8 @@ const UserManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/users", {
-         headers: { Authorization: `Bearer ${token}` } }); // Fixed URL
+      const res = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/users", { // Fixed URL
+         headers: { Authorization: `Bearer ${token}` } });
       setUsers(res.data);
       toast.success('Users fetched successfully!');
     } catch (error) {
@@ -29,11 +32,11 @@ const UserManager = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put("https://hotel-booking-app-sand-seven.vercel.app/api/users/${editingId}", form, {
+        await axios.put(`https://hotel-booking-app-sand-seven.vercel.app/api/users/${editingId}`, form, { // Fixed URL
           headers: { Authorization: `Bearer ${token}` },
         }); // Updated URL
       } else {
-        await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/users", form, {
+        await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/users", form, { // Fixed URL
           headers: { Authorization: `Bearer ${token}` },
         }); // Fixed URL
       }
@@ -63,7 +66,7 @@ const UserManager = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/users/${id}`, {
+      await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/users/${id}`, { // Fixed URL
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('User deleted successfully!');
