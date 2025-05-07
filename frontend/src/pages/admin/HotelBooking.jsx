@@ -36,14 +36,14 @@ const HotelBooking = () => {
     const fetchUserAndHotel = async () => {
         try {
 
-            const userRes = await axios.get(`https://hotel-booking-app-sand-seven.vercel.app/api/users/${userId}`, { // Fixed template literal syntax
+            const userRes = await axios.get(`http://localhost:5000/api/users/${userId}`, { // Fixed template literal syntax
                 headers: { Authorization: `Bearer ${token}` },
             });
             setUser(userRes.data);
             console.log(userRes.data);
 
 
-            const hotelRes = await axios.get(`https://hotel-booking-app-sand-seven.vercel.app/api/hotels/${hotelId}`, {
+            const hotelRes = await axios.get(`http://localhost:5000/api/hotels/${hotelId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setHotel(hotelRes.data);
@@ -61,8 +61,11 @@ const HotelBooking = () => {
             const bookingRes = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", { // Fixed template literal syntax
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setBookings(bookingRes.data);
             console.log(bookingRes.data); // for checking the bookings value
+            setBookings(bookingRes.data);
+            const filteredBookings = bookingRes.data.filter(booking => booking.user._id === userId); // Filter bookings by userId
+            setBookings(filteredBookings); // Set filtered bookings to state
+            console.log(filteredBookings); // for checking the bookings value
         } catch (error) {
             console.error('Error fetching bookings:', error);
         }
@@ -81,7 +84,7 @@ const HotelBooking = () => {
         if (editingId) {
             try {
                 // Update existing booking
-                await axios.put(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${editingId}`, form, { // Fixed the URL
+                await axios.put(`http://localhost:5000/api/bookings/${editingId}`, form, { // Fixed the URL
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 toast.success('Booking updated successfully!');
@@ -94,7 +97,7 @@ const HotelBooking = () => {
             try {
                 // Create a new booking
                 let { checkIn, checkOut, status } = form;
-                await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", { user: userId, hotel: hotelId, checkIn, checkOut, status }, {
+                await axios.post("http://localhost:5000/api/bookings", { user: userId, hotel: hotelId, checkIn, checkOut, status }, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 toast.success('Booking created successfully!');
@@ -108,7 +111,7 @@ const HotelBooking = () => {
                 setEditingId(null);
                 fetchBookings();
             }
-        }    
+        }
     };
 
     const handleEdit = (b) => {
@@ -123,7 +126,7 @@ const HotelBooking = () => {
     };
 
     const handleDelete = async (id) => {
-        await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${id}`, { // Fixed the URL
+        await axios.delete(`http://localhost:5000/api/bookings/${id}`, { // Fixed the URL
             headers: { Authorization: `Bearer ${token}` },
         });
         fetchBookings();
@@ -174,22 +177,26 @@ const HotelBooking = () => {
                 </button>
             </div>
 
-            <div className="space-y-2" key={userId}>
-                {bookings.map((b) => (<>
-                    {b.user._id === userId && (
+            <div className="space-y-2">
+                {bookings.map((b) => (
+                    userId ? (
                         <>
                             <div
                                 key={b._id}
                                 className="bg-white rounded shadow p-4 flex justify-between items-center"
                             >
-                                <div>
-                                    <p className="font-semibold">
-                                        {b.user.name} - {b.hotel.name}
-                                    </p>
-                                    <p className="text-sm text-gray-500">
-                                        {b.checkIn.slice(0, 10)} to {b.checkOut.slice(0, 10)} | {b.status}
-                                    </p>
-                                </div>
+                                {b.user && b.hotel ? (
+                                    <div>
+                                        <p className="font-semibold">
+                                            {b.user.name} - {b.hotel.name}
+                                        </p>
+                                        <p className="text-sm text-gray-500">
+                                            {b.checkIn.slice(0, 10)} to {b.checkOut.slice(0, 10)} | {b.status}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <p className="text-red-500">user or hotel not available</p>
+                                )}
                                 <div className="space-x-2">
                                     <button
                                         onClick={() => handleEdit(b)}
@@ -207,8 +214,8 @@ const HotelBooking = () => {
                             </div>
                         </>
                     )
-                    }
-                </>))}
+                        : <h1 className="text-red-500">No bookings found</h1>
+                ))}
             </div>
         </div>
     );
