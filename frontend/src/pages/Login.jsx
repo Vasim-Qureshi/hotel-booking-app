@@ -12,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await api.post("https://hotel-booking-app-sand-seven.vercel.app/api/auth/login", { email, password }); // Fixed array brackets
+      const { data } = await api.post("/api/auth/login", { email, password }); // Fixed array brackets
       localStorage.setItem('token', data.token);
       navigate('/'); // Redirect to home after login
     } catch (error) {
