@@ -127,7 +127,7 @@ const BookingManager = () => {
         {bookings.map((b) => (
           <div key={b._id} className="bg-white rounded shadow p-4 flex justify-between items-center">
             <div>
-              <p className="font-semibold">{b.user.name ? b.user.name : 'Unknown User'} - {b.hotel.name}</p>
+              <p className="font-semibold">{b.user.name !== null ? b.user.name : 'Unknown User'} - {b.hotel.name}</p>
               <p className="text-sm text-gray-500">{b.checkIn.slice(0, 10)} to {b.checkOut.slice(0, 10)} | {b.status}</p>
             </div>
             <div className="space-x-2">
