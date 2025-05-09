@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 const BookingManager = () => {
   const [bookings, setBookings] = useState([]);
@@ -21,13 +21,13 @@ const BookingManager = () => {
   const fetchData = async () => {
     try {
       const [bookingRes, userRes, hotelRes] = await Promise.all([
-        axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", {
+        axios.get("http://localhost:5000/api/bookings", { // Fixed the URL
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/users", {
+        axios.get("http://localhost:5000/api/users", { // Fixed the URL
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/hotels", {
+        axios.get("http://localhost:5000/api/hotels", { // Fixed the URL
           headers: { Authorization: `Bearer ${token}` },
         })
       ]);
@@ -53,11 +53,11 @@ const BookingManager = () => {
   const handleSubmit = async () => {
     try {
       if (editingId) {
-        await axios.put(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${editingId}`, form, {
+        await axios.put(`http://localhost:5000/api/bookings/${editingId}`, form, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/bookings", form, { // Fixed the URL
+        await axios.post("http://localhost:5000/api/bookings", form, { // Fixed the URL
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -84,7 +84,7 @@ const BookingManager = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/bookings/${id}`, { // Fixed the URL
+    await axios.delete(`http://localhost:5000/api/bookings/${id}`, { // Fixed the URL
       headers: { Authorization: `Bearer ${token}` },
     });
     fetchData();
@@ -127,7 +127,7 @@ const BookingManager = () => {
         {bookings.map((b) => (
           <div key={b._id} className="bg-white rounded shadow p-4 flex justify-between items-center">
             <div>
-              <p className="font-semibold">{b.user.name} - {b.hotel.name}</p>
+              <p className="font-semibold">{b.user.name ? b.user.name : 'Unknown User'} - {b.hotel.name}</p>
               <p className="text-sm text-gray-500">{b.checkIn.slice(0, 10)} to {b.checkOut.slice(0, 10)} | {b.status}</p>
             </div>
             <div className="space-x-2">
