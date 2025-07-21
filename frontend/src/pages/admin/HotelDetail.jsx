@@ -18,7 +18,7 @@ const HotelDetail = () => {
     useEffect(() => {
         const fetchHotelDetails = async () => {
         try {
-            const { data } = await axios.get(`https://hotel-booking-app-sand-seven.vercel.app/api/hotels/${id}`, {  // Fixed template literal
+            const { data } = await axios.get(`http://localhost:5000/api/hotels/${id}`, {  // Fixed template literal
             headers: { Authorization: `Bearer ${token}` },
             });
             setHotel(data);
@@ -35,7 +35,7 @@ const HotelDetail = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/hotels/${id}`, {  // Updated URL
+            await axios.delete(`http://localhost:5000/api/hotels/${id}`, {  // Updated URL
                 headers: { Authorization: `Bearer ${token}` },
             });
             toast.success("Hotel deleted successfully");

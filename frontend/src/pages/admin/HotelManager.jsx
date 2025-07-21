@@ -17,7 +17,7 @@ const HotelManage = () => {
   const token = localStorage.getItem('token');
 
   const fetchHotels = async () => {
-    const res = await axios.get("https://hotel-booking-app-sand-seven.vercel.app/api/hotels", {  // Fixed URL
+    const res = await axios.get("http://localhost:5000/api/hotels", {  // Fixed URL
       headers: { Authorization: `Bearer ${token}` },
     });
     setHotels(res.data);
@@ -43,13 +43,13 @@ const HotelManage = () => {
       };
 
       if (editingId) {
-        await axios.put(`https://hotel-booking-app-sand-seven.vercel.app/api/hotels/${editingId}`, data, {
+        await axios.put(`http://localhost:5000/api/hotels/${editingId}`, data, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('Hotel updated successfully!');
         setEditingId(null);
       } else {
-        await axios.post("https://hotel-booking-app-sand-seven.vercel.app/api/hotels", data, {
+        await axios.post("http://localhost:5000/api/hotels", data, {
           headers: { Authorization: `Bearer ${token}` },
         });
         toast.success('Hotel added successfully!');
@@ -75,7 +75,7 @@ const HotelManage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://hotel-booking-app-sand-seven.vercel.app/api/hotels/${id}`, {  // Updated URL
+      await axios.delete(`http://localhost:5000/api/hotels/${id}`, {  // Updated URL
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Hotel deleted successfully");
